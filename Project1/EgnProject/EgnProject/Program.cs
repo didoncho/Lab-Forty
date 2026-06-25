@@ -26,14 +26,14 @@ Console.WriteLine();
 foreach (string egn in results)
     Console.WriteLine($"  {egn}");
 
-Console.WriteLine();
-Console.WriteLine("Done.");
+    Console.WriteLine();
+    Console.WriteLine("Done.");
 
-return;
+    return;
 
-// ---------------------------------------------------------------------------
-// Console input helpers
-// ---------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------
+    // Console input helpers
+    // ---------------------------------------------------------------------------
 
 static Gender ReadGender()
 {

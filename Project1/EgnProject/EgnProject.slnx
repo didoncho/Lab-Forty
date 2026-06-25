@@ -1,0 +1,4 @@
+<Solution>
+<Project Path="../UNITTests/EgnProject.Tests/EgnProject.Tests.csproj" />
+<Project Path="EgnProject/EgnProject.csproj" />
+</Solution>
