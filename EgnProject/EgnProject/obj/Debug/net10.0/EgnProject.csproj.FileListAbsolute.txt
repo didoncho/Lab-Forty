@@ -1,0 +1,15 @@
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\bin\Debug\net10.0\EgnProject.exe
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\bin\Debug\net10.0\EgnProject.deps.json
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\bin\Debug\net10.0\EgnProject.runtimeconfig.json
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\bin\Debug\net10.0\EgnProject.dll
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\bin\Debug\net10.0\EgnProject.pdb
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\EgnProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\EgnProject.AssemblyInfoInputs.cache
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\EgnProject.AssemblyInfo.cs
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\EgnProject.csproj.CoreCompileInputs.cache
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\EgnProject.sourcelink.json
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\EgnProject.dll
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\refint\EgnProject.dll
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\EgnProject.pdb
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\EgnProject.genruntimeconfig.cache
+C:\Users\VasilBanchev.DESKTOP-SV3I19T\Documents\Интервюта\Задачи\Diyan\EgnProject\EgnProject\obj\Debug\net10.0\ref\EgnProject.dll

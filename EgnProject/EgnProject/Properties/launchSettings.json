@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EgnProject": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
