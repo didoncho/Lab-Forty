@@ -1,0 +1,15 @@
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/bin/Debug/net10.0/ConsoleApp1
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/bin/Debug/net10.0/ConsoleApp1.deps.json
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/bin/Debug/net10.0/ConsoleApp1.runtimeconfig.json
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/bin/Debug/net10.0/ConsoleApp1.dll
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/bin/Debug/net10.0/ConsoleApp1.pdb
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ConsoleApp1.AssemblyInfoInputs.cache
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ConsoleApp1.AssemblyInfo.cs
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ConsoleApp1.csproj.CoreCompileInputs.cache
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ConsoleApp1.sourcelink.json
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ConsoleApp1.dll
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/refint/ConsoleApp1.dll
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ConsoleApp1.pdb
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ConsoleApp1.genruntimeconfig.cache
+/home/dido/Documents/Lab-Forty/Project2/ConsoleApp1/ConsoleApp1/obj/Debug/net10.0/ref/ConsoleApp1.dll
