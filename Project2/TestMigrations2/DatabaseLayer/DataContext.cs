@@ -6,6 +6,9 @@ namespace DatabaseLayer;
 
 public class DataContext : DbContext
 {
+    // Toggle to true to use an in-memory database instead of MySQL/MariaDB.
+    public static bool UseInMemoryDatabase = true;
+
     public DbSet<User>  Users { get; set; }
     public DbSet<UserInformation>  UserInformations { get; set; }
     public DbSet<Products>  Products { get; set; }
@@ -13,20 +16,25 @@ public class DataContext : DbContext
     public DbSet<Class1>  Class1s { get; set; }
     public DbSet<Class2>  Class2s { get; set; }
     public DbSet<Class3>  Class3s { get; set; }
-    
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // optionsBuilder.UseInMemoryDatabase("AASAFSF");
+        if (UseInMemoryDatabase)
+        {
+            optionsBuilder.UseInMemoryDatabase("InMemoryDb");
+        }
+        else
+        {
+            string connectionString = "Host=localhost;Port=3306;Username=root;Password=D!di2008;Database=Manjaro Local;";
 
-        string connectionString = "Host=localhost;Port=3306;Username=root;Password=D!di2008;Database=Manjaro Local;";
-        
-        optionsBuilder.UseMySql(
-            connectionString,
-            //ServerVersion.AutoDetect(connectionString)
-            new MariaDbServerVersion(new Version(12, 2, 2))
-            );
-        
+            optionsBuilder.UseMySql(
+                connectionString,
+                //ServerVersion.AutoDetect(connectionString)
+                new MariaDbServerVersion(new Version(12, 2, 2))
+                );
+        }
+
         base.OnConfiguring(optionsBuilder);
     }
 

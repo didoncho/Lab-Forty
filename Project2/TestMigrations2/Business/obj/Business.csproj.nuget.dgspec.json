@@ -1,29 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/Business.csproj": {}
+    "C:\\Users\\VasilBanchev.DESKTOP-SV3I19T\\Documents\\Интервюта\\Задачи\\Diyan\\Project2\\TestMigrations2\\Business\\Business.csproj": {}
   },
   "projects": {
-    "/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/Business.csproj": {
+    "C:\\Users\\VasilBanchev.DESKTOP-SV3I19T\\Documents\\Интервюта\\Задачи\\Diyan\\Project2\\TestMigrations2\\Business\\Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/Business.csproj",
+        "projectUniqueName": "C:\\Users\\VasilBanchev.DESKTOP-SV3I19T\\Documents\\Интервюта\\Задачи\\Diyan\\Project2\\TestMigrations2\\Business\\Business.csproj",
         "projectName": "Business",
-        "projectPath": "/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/Business.csproj",
-        "packagesPath": "/home/dido/.nuget/packages/",
-        "outputPath": "/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/",
+        "projectPath": "C:\\Users\\VasilBanchev.DESKTOP-SV3I19T\\Documents\\Интервюта\\Задачи\\Diyan\\Project2\\TestMigrations2\\Business\\Business.csproj",
+        "packagesPath": "C:\\Users\\VasilBanchev.DESKTOP-SV3I19T\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\VasilBanchev.DESKTOP-SV3I19T\\Documents\\Интервюта\\Задачи\\Diyan\\Project2\\TestMigrations2\\Business\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/dido/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\VasilBanchev.DESKTOP-SV3I19T\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
+            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -38,10 +45,11 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
@@ -75,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.108/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
