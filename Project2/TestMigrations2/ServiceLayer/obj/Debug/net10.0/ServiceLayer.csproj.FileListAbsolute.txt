@@ -1,0 +1,12 @@
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/bin/Debug/net10.0/ServiceLayer.deps.json
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/bin/Debug/net10.0/ServiceLayer.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/bin/Debug/net10.0/ServiceLayer.pdb
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.GeneratedMSBuildEditorConfig.editorconfig
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.AssemblyInfoInputs.cache
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.AssemblyInfo.cs
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.csproj.CoreCompileInputs.cache
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.sourcelink.json
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/refint/ServiceLayer.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.pdb
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ref/ServiceLayer.dll

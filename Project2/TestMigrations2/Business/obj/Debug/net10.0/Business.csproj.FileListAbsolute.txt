@@ -1,0 +1,15 @@
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/bin/Debug/net10.0/Business.deps.json
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/bin/Debug/net10.0/Business.runtimeconfig.json
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/bin/Debug/net10.0/Business.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/bin/Debug/net10.0/Business.pdb
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.csproj.AssemblyReference.cache
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.GeneratedMSBuildEditorConfig.editorconfig
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.AssemblyInfoInputs.cache
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.AssemblyInfo.cs
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.csproj.CoreCompileInputs.cache
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.sourcelink.json
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/refint/Business.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.pdb
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/Business.genruntimeconfig.cache
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/Business/obj/Debug/net10.0/ref/Business.dll

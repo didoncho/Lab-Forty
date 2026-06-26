@@ -10,6 +10,7 @@ namespace Business
 	{
 		public int Id { get; set; }
 		public string Egn { get; set; }
+		
 		[Required, MaxLength(100)]
 		public string Address { get; set; }
 

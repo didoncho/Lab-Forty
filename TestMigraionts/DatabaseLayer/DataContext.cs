@@ -32,7 +32,7 @@ namespace DatabaseLayer
 		{
 			base.OnModelCreating(modelBuilder);
 
-
+			modelBuilder.Entity<UserInformation>().Property(u => u.Address).HasMaxLength(20);
 		}
 	}
 }
