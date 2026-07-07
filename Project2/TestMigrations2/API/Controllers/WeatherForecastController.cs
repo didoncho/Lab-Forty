@@ -1,10 +1,12 @@
+using Business;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer;
 
 namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class WeatherForecastController : ControllerBase
+	public class WeatherForecastController(ProductService productService) : ControllerBase
 	{
 		private static readonly string[] Summaries =
 		[
@@ -21,6 +23,12 @@ namespace API.Controllers
 				Summary = Summaries[Random.Shared.Next(Summaries.Length)]
 			})
 			.ToArray();
+		}
+
+		[HttpGet("products")]
+		public IEnumerable<Products> GetProducts()
+		{
+			return productService.GetAllProducts();
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Business;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,12 +10,12 @@ namespace DatabaseLayer
 	public class ProductRepository(DataContext context)
 	{
 
-		public Products[] GetAll()
+		public List<Products> GetAll()
 		{
 			//GetAll
 
 			EnsureAdded();
-			return context.Products.ToArray();
+			return context.Products.ToList();
 		}
 
 		public void EnsureAdded()
@@ -41,7 +42,7 @@ namespace DatabaseLayer
 		{
 			//Get by name
 			EnsureAdded();
-			return context.Products.FirstOrDefault(n => n.Id == id);
+			return context.Products.AsNoTracking().FirstOrDefault(n => n.Id == id);
 		}
 
 		public void Update(int id, string newName)

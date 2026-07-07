@@ -2,6 +2,7 @@ using Business;
 using DatabaseLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ServiceLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +12,14 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+///
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<ProductRepository>();
+
+////Dependency Injection 
+builder.Services.AddTransient<ProductService>();
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddSingleton<ProductService>();
 
 var app = builder.Build();
 

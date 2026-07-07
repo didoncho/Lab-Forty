@@ -1,10 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.8.11904.113 insiders
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{101AE2F7-CEFF-43AD-A627-3D7A7F5EF130}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLayer", "DatabaseLayer\DatabaseLayer.csproj", "{18B981C3-B390-479D-9104-D0A5CE1D9BDB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{B0C14FB0-81BB-40F9-B363-448D502C7619}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{7AA7C257-D187-4143-A2A0-12D46C646B17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +29,12 @@ Global
 		{B0C14FB0-81BB-40F9-B363-448D502C7619}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C14FB0-81BB-40F9-B363-448D502C7619}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C14FB0-81BB-40F9-B363-448D502C7619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AA7C257-D187-4143-A2A0-12D46C646B17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AA7C257-D187-4143-A2A0-12D46C646B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AA7C257-D187-4143-A2A0-12D46C646B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AA7C257-D187-4143-A2A0-12D46C646B17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
