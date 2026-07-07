@@ -10,3 +10,9 @@
 /home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/refint/ServiceLayer.dll
 /home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.pdb
 /home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ref/ServiceLayer.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/bin/Debug/net10.0/Business.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/bin/Debug/net10.0/DatabaseLayer.dll
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/bin/Debug/net10.0/Business.pdb
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/bin/Debug/net10.0/DatabaseLayer.pdb
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceLayer.csproj.AssemblyReference.cache
+/home/dido/Documents/Lab-Forty/Project2/TestMigrations2/ServiceLayer/obj/Debug/net10.0/ServiceL.3037F684.Up2Date

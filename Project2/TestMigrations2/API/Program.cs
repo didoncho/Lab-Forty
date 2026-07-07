@@ -17,9 +17,11 @@ builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<ProductRepository>();
 
 ////Dependency Injection 
-builder.Services.AddTransient<ProductService>();
 builder.Services.AddScoped<ProductService>();
-builder.Services.AddSingleton<ProductService>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddScoped<OrderService>();
 
 var app = builder.Build();
 
