@@ -1,0 +1,14 @@
+# ---- Visual Studio / .NET generated files ----
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio workspace / cache
+.vs/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
