@@ -5,23 +5,35 @@ namespace ServiceLayer;
 
 public class UserService(UserRepository userRepository)
 {
-    public List<User> GetAllUsers()
+    public Task<List<User>> GetAllUsersAsync(int page = 1, int size = 10) => userRepository.GetAllAsync(page, size);
+
+    public Task<User?> GetUserByIdAsync(int id) => userRepository.GetAsync(id);
+
+    public Task<User?> GetUserByEmailAsync(string email) => userRepository.GetByEmailAsync(email);
+
+    // Creates the User together with its UserInformation.
+    public Task<User> CreateUserAsync(string email, string region, string phoneNumber, string egn, string address)
     {
-        return userRepository.GetAll();
+        var user = new User
+        {
+            Email = email,
+            Region = region,
+            PhoneNumber = phoneNumber,
+            UserInformation = new UserInformation
+            {
+                Egn = egn,
+                Address = address
+            }
+        };
+
+        return userRepository.CreateAsync(user);
     }
 
-    public void CreateUser(User user)
-    {
-        userRepository.Created(user);
-    }
+    public Task<bool> UpdateUserAsync(int id, string email, string region, string phoneNumber) =>
+        userRepository.UpdateAsync(id, email, region, phoneNumber);
 
-    public User? GetUserByEmail(string email)
-    {
-        return userRepository.GetByEmail(email);
-    }
+    public Task<bool> UpdateUserExecuteAsync(int id, string email, string region, string phoneNumber) =>
+        userRepository.UpdateExecuteAsync(id, email, region, phoneNumber);
 
-    public User? GetUserById(int id)
-    {
-        return userRepository.Get(id);
-    }
+    public Task<bool> DeleteUserAsync(int id) => userRepository.DeleteAsync(id);
 }

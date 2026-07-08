@@ -5,48 +5,86 @@ namespace DatabaseLayer;
 
 public class OrderRepository(DataContext context)
 {
-    public List<Order> GetAll()
+    // Create: an Order does not create a User or Products - it attaches EXISTING ones.
+    // The user is attached by its foreign key; the products are loaded (tracked) and
+    // linked so EF only writes the join rows instead of inserting new products.
+    public async Task<Order> CreateAsync(decimal price, DateOnly shippingDate, int userId, List<int> productIds)
     {
-        Created();
-        return context.Orders.ToList();
-    }
+        var products = await context.Products
+            .Where(p => productIds.Contains(p.Id))
+            .ToListAsync();
 
-    public void Created()
-    {
-        context.Orders.Add(new Order()
+        var order = new Order
         {
-            Price = 0,
-            Products = []
-        });
-        context.SaveChanges();
-    }
-    
-    public void Created(Order order)
-    {
-        context.Orders.Add(order);
-        context.SaveChanges();
+            Price = price,
+            ShippingDate = shippingDate,
+            UserId = userId,
+            Products = products
+        };
+
+        await context.Orders.AddAsync(order);
+        await context.SaveChangesAsync();
+        return order;
     }
 
-    public Order? GetByDate(DateOnly date)
+    public async Task<List<Order>> GetAllAsync()
     {
-        Created();
-        return context.Orders.FirstOrDefault(p => p.ShippingDate == date);
+        return await context.Orders
+            .AsNoTracking()
+            .Include(o => o.User)
+            .Include(o => o.Products)
+            .ToListAsync();
     }
 
-    public Order? Get(int id)
+    public async Task<Order?> GetAsync(int id)
     {
-        Created();
-        return context.Orders.AsNoTracking().FirstOrDefault(p => p.ID == id);
+        return await context.Orders
+            .AsNoTracking()
+            .Include(o => o.User)
+            .Include(o => o.Products)
+            .FirstOrDefaultAsync(o => o.ID == id);
     }
 
-    public void Update(int id, DateOnly newShippingDate)
+    public async Task<Order?> GetByDateAsync(DateOnly date)
     {
-        Created();
-        var order = Get(id);
-        if (order == null)
-            return;
-        
-        order.ShippingDate = newShippingDate;
-        context.SaveChanges();
+        return await context.Orders
+            .AsNoTracking()
+            .Include(o => o.User)
+            .Include(o => o.Products)
+            .FirstOrDefaultAsync(o => o.ShippingDate == date);
+    }
+
+    // Update variant #1: tracked entity + SaveChangesAsync.
+    public async Task<bool> UpdateAsync(int id, decimal price, DateOnly shippingDate)
+    {
+        var order = await context.Orders.FirstOrDefaultAsync(o => o.ID == id);
+        if (order is null)
+            return false;
+
+        order.Price = price;
+        order.ShippingDate = shippingDate;
+        await context.SaveChangesAsync();
+        return true;
+    }
+
+    // Update variant #2: ExecuteUpdateAsync, no tracking. (Not supported by InMemory.)
+    public async Task<bool> UpdateExecuteAsync(int id, decimal price, DateOnly shippingDate)
+    {
+        return await context.Orders
+            .Where(o => o.ID == id)
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(o => o.Price, price)
+                .SetProperty(o => o.ShippingDate, shippingDate)) > 0;
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var order = await context.Orders.FirstOrDefaultAsync(o => o.ID == id);
+        if (order is null)
+            return false;
+
+        context.Orders.Remove(order);
+        await context.SaveChangesAsync();
+        return true;
     }
 }

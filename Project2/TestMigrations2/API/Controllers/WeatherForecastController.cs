@@ -26,9 +26,9 @@ namespace API.Controllers
 		}
 
 		[HttpGet("products")]
-		public IEnumerable<Products> GetProducts()
+		public async Task<IEnumerable<Products>> GetProducts()
 		{
-			return productService.GetAllProducts();
+			return await productService.GetAllProductsAsync();
 		}
 	}
 }

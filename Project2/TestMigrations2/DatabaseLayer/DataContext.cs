@@ -1,6 +1,5 @@
 using Business;
 using Microsoft.EntityFrameworkCore;
-using Business.NewEntities;
 
 namespace DatabaseLayer;
 
@@ -13,9 +12,6 @@ public class DataContext : DbContext
     public DbSet<UserInformation>  UserInformations { get; set; }
     public DbSet<Products>  Products { get; set; }
     public DbSet<Order>   Orders { get; set; }
-    public DbSet<Class1>  Class1s { get; set; }
-    public DbSet<Class2>  Class2s { get; set; }
-    public DbSet<Class3>  Class3s { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

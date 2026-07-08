@@ -1,26 +1,32 @@
-using Business;
+using System.Text.Json.Serialization;
 using DatabaseLayer;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ServiceLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	// Entities have bidirectional navigations (e.g. User <-> UserInformation),
+	// so ignore reference cycles when serializing responses.
+	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-///
+// EF Core DbContext
 builder.Services.AddDbContext<DataContext>();
-builder.Services.AddScoped<ProductRepository>();
 
-////Dependency Injection 
-builder.Services.AddScoped<ProductService>();
+// Repositories
 builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UserInformationRepository>();
+builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<OrderRepository>();
+
+// Services
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UserInformationService>();
+builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<OrderService>();
 
 var app = builder.Build();
@@ -40,20 +46,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// Minimal API: products
-app.MapGet("/products", (ProductRepository repository) => repository.GetAll());
-
-app.MapGet("/products/{id:int}", (int id, ProductRepository repository) =>
-	repository.Get(id) is { } product ? Results.Ok(product) : Results.NotFound());
-
-app.MapGet("/products/by-name/{name}", (string name, ProductRepository repository) =>
-	repository.GetByName(name) is { } product ? Results.Ok(product) : Results.NotFound());
-
-app.MapPut("/products/{id:int}", (int id, [FromBody] string newName, ProductRepository repository) =>
-{
-	repository.Update(id, newName);
-	return Results.NoContent();
-});
 
 app.Run();
