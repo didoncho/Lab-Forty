@@ -1,0 +1,120 @@
+## .NET / Visual Studio .gitignore
+## Based on the standard GitHub VisualStudio template (github/gitignore).
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
+# Mono auto generated files
+mono_crash.*
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / VS Code / Rider IDE folders
+.vs/
+.vscode/
+.idea/
+*.sln.iml
+
+# Visual Studio cache/options
+.vshistory/
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# MSBuild / build artifacts
+[Oo]bj/
+[Bb]in/
+*.tlog
+*.log
+*.binlog
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# .NET Core
+*.dll
+*.exe
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+# Entity Framework
+*.edmx.diagram
+
+# Test / coverage results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+TestResults/
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.ipdb
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.tlb
+*.tli
+*.tlh
+*.cache
+
+# Others
+~$*
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.publishsettings
+
+# Rider
+*.sln.iml
+.idea/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# OS files
+.DS_Store
+Thumbs.db
