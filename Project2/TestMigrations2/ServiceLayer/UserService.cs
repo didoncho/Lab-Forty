@@ -5,7 +5,7 @@ namespace ServiceLayer;
 
 public class UserService(UserRepository userRepository)
 {
-    public Task<List<User>> GetAllUsersAsync(int page = 1, int size = 10) => userRepository.GetAllAsync(page, size);
+    public Task<List<User>> GetAllUsersAsync(int? minOrdersCount, string region, int page = 1, int size = 10) => userRepository.GetAllAsync(minOrdersCount, region, page, size);
 
     public Task<User?> GetUserByIdAsync(int id) => userRepository.GetAsync(id);
 
@@ -25,7 +25,7 @@ public class UserService(UserRepository userRepository)
                 Address = address
             }
         };
-
+        
         return userRepository.CreateAsync(user);
     }
 

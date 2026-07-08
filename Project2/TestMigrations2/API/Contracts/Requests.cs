@@ -1,7 +1,7 @@
 namespace API.Contracts;
 
 // A User is created together with its UserInformation (Egn + Address).
-public record CreateUserRequest(string Email, string Region, string PhoneNumber, string Egn, string Address);
+public record CreateUserRequest(string Email, string Region, string PhoneNumber, string Egn, string Address, int MinOrdersCount = 1);
 
 public record UpdateUserRequest(string Email, string Region, string PhoneNumber);
 

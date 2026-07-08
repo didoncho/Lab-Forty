@@ -6,7 +6,7 @@ namespace DatabaseLayer;
 public class DataContext : DbContext
 {
     // Toggle to true to use an in-memory database instead of MySQL/MariaDB.
-    public static bool UseInMemoryDatabase = true;
+    public static bool UseInMemoryDatabase = false;
 
     public DbSet<User>  Users { get; set; }
     public DbSet<UserInformation>  UserInformations { get; set; }
