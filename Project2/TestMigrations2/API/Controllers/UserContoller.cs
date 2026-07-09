@@ -10,8 +10,8 @@ namespace API.Controllers;
 public class UserController(UserService userService) : ControllerBase
 {
     [HttpGet]
-    public async Task<IEnumerable<User>> GetAll([FromQuery] int page = 1, [FromQuery] int size = 10)
-        => await userService.GetAllUsersAsync(page, size);
+    public async Task<IEnumerable<User>> GetAll([FromQuery] int? minOrdersCount, [FromQuery] string? region, [FromQuery] int page = 1, [FromQuery] int size = 10)
+        => await userService.GetAllUsersAsync(minOrdersCount, region, page, size);
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<User>> GetById([FromRoute] int id)

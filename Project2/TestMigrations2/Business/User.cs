@@ -6,6 +6,9 @@ public class User
     public string Email { get; set; }
     public string Region { get; set; }
     public string PhoneNumber { get; set; }
+    /*
+    public int MinOrdersCount => Orders.Count;
+    */
 
     public int UserInformationId { get; set; }
     public UserInformation UserInformation { get; set; }

@@ -15,12 +15,26 @@ public class UserRepository(DataContext context)
         return user;
     }
 
-    public async Task<List<User>> GetAllAsync(int page = 1, int size = 10)
+    public async Task<List<User>> GetAllAsync(int? minOrdersCount, string region, int page = 1, int size = 10)
     {
-        return await context.Users
+        var users = context.Users
             .AsNoTracking()
             .Include(u => u.UserInformation)
-            .Skip((page - 1) * size)
+            .Include(u => u.Orders)
+            .ThenInclude(uo=>uo.Products).AsQueryable();
+
+        if (string.IsNullOrWhiteSpace(region))
+        {
+            users.Where(u => u.Region == region);
+        }
+
+        if (minOrdersCount != 0)
+        {
+            users.Where(u => u.Orders.Count >= minOrdersCount);
+        }
+
+
+        return await users.Skip((page - 1) * size)
             .Take(size)
             .ToListAsync();
     }
