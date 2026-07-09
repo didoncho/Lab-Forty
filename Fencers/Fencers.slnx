@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="BusinessLayer/BusinessLayer.csproj" />
+  <Project Path="DataLayer/DataLayer.csproj" />
+  <Project Path="Fencers/Fencers.csproj" />
+  <Project Path="ServiceLayer/ServiceLayer.csproj" />
+</Solution>
