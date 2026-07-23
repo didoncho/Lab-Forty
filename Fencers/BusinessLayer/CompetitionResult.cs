@@ -1,7 +1,8 @@
 namespace BusinessLayer;
 
-public class CompetitionResults
+public class CompetitionResult
 {
+    public int Id { get; set; }
     public int Rank { get; set; }
     public int Points { get; set; }
     

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace BusinessLayer;
 
 public class FencerInformation
@@ -9,5 +11,6 @@ public class FencerInformation
     public string Address { get; set; }
     
     public int FencerId { get; set; }
+    [ForeignKey(nameof(FencerId))]
     public Fencer Fencer { get; set; }
 }

@@ -12,6 +12,8 @@ public class DataContext : DbContext
     public DbSet<FencerInformation>  FencerInformations { get; set; }
     public DbSet<Coach>  Coaches { get; set; }
     public DbSet<Competition>  Competitions { get; set; }
+    public DbSet<CompetitionResult>  CompetitionResults { get; set; }
+    public DbSet<CompetitionFile>  CompetitionFiles { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

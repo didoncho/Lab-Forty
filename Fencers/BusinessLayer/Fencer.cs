@@ -12,5 +12,5 @@ public class Fencer
     public int CoachId { get; set; }
     public Coach Coach { get; set; }
     
-    public List<CompetitionResults> CompetitionResults { get; set; }
+    public List<CompetitionResult> CompetitionResults { get; set; }
 }

@@ -1,6 +1,6 @@
 namespace BusinessLayer;
 
-public class CompetitionFiles
+public class CompetitionFile
 {
     public int Id { get; set; }
     public int FencerUID { get; set; }
