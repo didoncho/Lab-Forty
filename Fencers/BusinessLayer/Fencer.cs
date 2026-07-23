@@ -1,8 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BusinessLayer;
 
 public class Fencer
 {
     public int Id { get; set; }
+    
+    [MaxLength(100)]
     public string Name { get; set; }
     public int UID { get; set; }
     
