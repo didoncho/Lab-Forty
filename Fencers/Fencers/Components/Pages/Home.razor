@@ -1,4 +1,6 @@
-﻿@page "/"
+﻿@using ServiceLayer
+@page "/"
+@inject CompetitionService competitionService
 
 <PageTitle>Home</PageTitle>
 
@@ -35,4 +37,10 @@
     new Fencer() {Name= "Ivan Ivanov",  PhoneNumber="023232323212343", EquipmentCount=6},
     new Fencer() {Name= "Ivan Pavlov",  PhoneNumber="022323212343", EquipmentCount=3}
     ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        //return base.OnInitializedAsync();
+        await competitionService.GetAllCompetitionsAsync();
+    }
 }
