@@ -16,6 +16,6 @@ public class CompetitionFileRepository(DataContext context)
     // READ
     public async Task<List<CompetitionFile>> GetAllAsync()
     {
-        return await context.CompetitionFiles.ToListAsync();
+        return await context.CompetitionFiles.AsNoTracking().ToListAsync();
     }
 }
