@@ -6,19 +6,16 @@ namespace DatabaseLayer;
 public class CompetitionFileRepository(DataContext context)
 {
     // CREATE
-    public async Task<Competition> CreateAsync(Competition competition)
+    public async Task<CompetitionFile> CreateAsync(CompetitionFile competitionFile)
     {
-        await context.Competitions.AddAsync(competition);
+        await context.CompetitionFiles.AddAsync(competitionFile);
         await context.SaveChangesAsync();
-        return competition;
+        return competitionFile;
     }
     
     // READ
     public async Task<List<CompetitionFile>> GetAllAsync()
     {
-        var competitionFile = context.CompetitionFiles
-            .AsNoTracking()
-            .AsQueryable();
-        return await competitionFile.ToListAsync();
+        return await context.CompetitionFiles.ToListAsync();
     }
 }

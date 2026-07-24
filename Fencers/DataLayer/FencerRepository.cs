@@ -16,11 +16,10 @@ public class FencerRepository(DataContext context)
     // READ
     public async Task<List<Fencer>> GetAllAsync()
     {
-        var fencers = context.Fencers
+        return await context.Fencers
             .AsNoTracking()
             .Include(u => u.FencerInformation)
-            .AsQueryable();
-        return await fencers.ToListAsync();
+            .ToListAsync();
     }
     
     // UPDATE

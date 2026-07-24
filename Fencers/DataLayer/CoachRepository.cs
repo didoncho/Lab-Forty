@@ -16,10 +16,7 @@ public class CoachRepository(DataContext context)
     // READ
     public async Task<List<Coach>> GetAllAsync()
     {
-        var coach = context.Coaches
-            .AsNoTracking()
-            .AsQueryable();
-        return await coach.ToListAsync();
+        return await context.Coaches.ToListAsync();
     }
     
     // UPDATE

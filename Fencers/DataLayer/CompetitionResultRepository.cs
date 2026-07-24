@@ -16,12 +16,11 @@ public class CompetitionResultRepository(DataContext context)
     // READ
     public async Task<List<CompetitionResult>> GetAllAsync()
     {
-        var competitionResult = context.CompetitionResults
+        return await context.CompetitionResults
             .AsNoTracking()
             .Include(u => u.Competition)
             .Include(u => u.Fencer)
-            .AsQueryable();
-        return await competitionResult.ToListAsync();
+            .ToListAsync();
     }
     
     // UPDATE
