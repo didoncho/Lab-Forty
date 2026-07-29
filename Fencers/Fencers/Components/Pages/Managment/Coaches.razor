@@ -1,9 +1,11 @@
 @using System.ComponentModel.DataAnnotations
+@using System.Runtime.CompilerServices
 @using ServiceLayer
 @using ServiceLayer.DTOs
 @using ServiceLayer.Mappers
 @page "/Coaches"
 @inject CoachService coach
+@rendermode InteractiveServer
 
 <h3>Coaches</h3>
 
@@ -26,16 +28,18 @@
             <td>@c.Egn</td>
             <td>@c.BirthPlace</td>
             <td>@c.Address</td>
+            <td><button @onclick="async (_) => await OnDelete(c.Id)">Delete</button></td>
+            <td><button @onclick="async (_) => await OnUpdate(c)">Update</button></td>
         </tr>
     }
 </table>
 
-<button @onclick="ShowModal">Add Fencer</button>
+<button @onclick="ShowModal">@(ShowAdd ? "Close" : "Open")</button>
 
-@* @if (ShowAdd) *@
-@* { *@
+@if (ShowAdd)
+{
 
-    <h3>Add a new fencer</h3>
+    <h3>Add a new coach</h3>
 
     <EditForm Model="newCoach" OnValidSubmit="AddCoach" class="form-control">
         <DataAnnotationsValidator/>
@@ -70,9 +74,9 @@
             <ValidationMessage For="() => newCoach.Address"/>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Fencer</button>
+        <button type="submit" class="btn btn-primary">Add Coach</button>
     </EditForm>
-@* }  *@
+}
 
 @code {
     public bool ShowAdd = false;
@@ -84,10 +88,11 @@
         ShowAdd = !ShowAdd;
     }
 
-    private void AddCoach()
+    private async Task AddCoach()
     {
-        coach.CreateCoachAsync(newCoach);
+        await coach.CreateCoachAsync(newCoach);
         newCoach = new();
+        coaches = await coach.GetAllCoachesAsync();
     }
     
     protected override async Task OnInitializedAsync()
@@ -97,6 +102,18 @@
             coaches = await coach.GetAllCoachesAsync();
         }
         //return base.OnInitializedAsync();
+    }
+    
+    private async Task OnDelete(int id)
+    {
+        await coach.DeleteCoachAsync(id);
+        coaches = await coach.GetAllCoachesAsync();
+    }
+
+    private async Task OnUpdate(CoachDTO coach)
+    {
+        newCoach = coach;
+        ShowAdd = true;
     }
 
     List<CoachDTO> coaches = [];

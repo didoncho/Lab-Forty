@@ -1,0 +1,139 @@
+@page "/Fencers"
+@using System.ComponentModel.DataAnnotations
+@using ServiceLayer
+@using ServiceLayer.DTOs
+@using ServiceLayer.Mappers
+@inject FencerService fencer
+@inject CoachService coach
+@rendermode InteractiveServer
+
+<h3>Fencers</h3>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>UID</td> 
+        <td>Date of birth</td>
+        <td>EGN</td>
+        <td>Birth place</td>
+        <td>Address</td>
+        <td>Coach</td>
+    </tr>
+    </thead>
+    
+    @foreach (var f in fencers)
+    {
+        <tr>
+            <td>@f.Name</td>
+            <td>@f.UID</td>
+            <td>@f.DateOfBirth</td>
+            <td>@f.Egn</td>
+            <td>@f.BirthPlace</td>
+            <td>@f.Address</td>
+            <td>@coaches.FirstOrDefault(c => c.Id == f.CoachId)?.Name</td>
+            <td><button @onclick="async (_) => await OnDelete(f.Id)">Delete</button></td>
+        </tr>
+    }
+</table>
+
+<button @onclick="ShowModal">@(ShowAdd ? "Close" : "Open")</button>
+
+@if (ShowAdd)
+{
+
+    <h3>Add a new fencer</h3>
+
+    <EditForm Model="newFencer" OnValidSubmit="AddFencer" class="form-control">
+        <DataAnnotationsValidator/>
+
+        <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <InputText id="name" class="form-control" @bind-Value="newFencer.Name"/>
+            <ValidationMessage For="() => newFencer.Name"/>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label" for="uid">UID</label>
+            <InputNumber id="name" class="form-control" @bind-Value="newFencer.UID"/>
+            <ValidationMessage For="() => newFencer.UID"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="dateOfBirth">Date of birth</label>
+            <InputDate id="dateOfBirth" class="form-control" @bind-Value="newFencer.DateOfBirth"/>
+            <ValidationMessage For="() => newFencer.DateOfBirth"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="egn">EGN</label>
+            <InputText id="egn" class="form-control" @bind-Value="newFencer.Egn"/>
+            <ValidationMessage For="() => newFencer.Egn"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="BirthPlace">Birth place</label>
+            <InputText id="BirthPlace" class="form-control" @bind-Value="newFencer.BirthPlace"/>
+            <ValidationMessage For="() => newFencer.BirthPlace"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="Address">Address</label>
+            <InputText id="Address" class="form-control" @bind-Value="newFencer.Address"/>
+            <ValidationMessage For="() => newFencer.Address"/>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label" for="Coach">Coach</label>
+            <select @bind=@newFencer.CoachId>
+                @foreach (var u in coaches)
+                {
+                    <option value=@u.Id>@u.Name</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Fencer</button>
+    </EditForm>
+}
+
+@code {
+    public bool ShowAdd = false;
+    
+    FencerDTO newFencer = new();
+
+    private void ShowModal()
+    {
+        ShowAdd = !ShowAdd;
+    }
+
+    private async Task AddFencer()
+    {
+        await fencer.CreateFencerAsync(newFencer);
+        newFencer = new();
+        fencers = await fencer.GetAllFencersAsync();
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        if (fencers.Count == 0)
+        {
+            fencers = await fencer.GetAllFencersAsync();
+        }
+
+        if (coaches.Count == 0)
+        {
+            coaches = await coach.GetAllAttachCoachesAsync();
+        }
+        //return base.OnInitializedAsync();
+    }
+
+    private async Task OnDelete(int id)
+    {
+        await fencer.DeleteFencerAsync(id);
+        fencers = await fencer.GetAllFencersAsync();
+    }
+
+    List<FencerDTO> fencers = [];
+    List<AttachCoachDTO> coaches = [];
+}

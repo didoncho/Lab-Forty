@@ -16,18 +16,7 @@ public class CoachRepository(DataContext context)
     // READ
     public async Task<List<Coach>> GetAllAsync()
     {
-        //return await context.Coaches.AsNoTracking().ToListAsync();
-        return
-        [
-            new Coach()
-            {
-                Name = "Diyan",
-                DateOfBirth = new DateOnly(2008, 06, 05),
-                Egn = "Egn",
-                BirthPlace = "Plovdiv",
-                Address = "Bul. Tsarigradsko shose"
-            }
-        ];
+        return await context.Coaches.AsNoTracking().ToListAsync();
     }
     
     // UPDATE

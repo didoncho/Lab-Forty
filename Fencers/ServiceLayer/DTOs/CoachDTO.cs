@@ -5,6 +5,8 @@ namespace ServiceLayer.DTOs;
 //DTO = Data transfer object
 public class CoachDTO
 {
+    public int Id { get; set; }
+    
     [Required(ErrorMessage = "Name is required.")]
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;

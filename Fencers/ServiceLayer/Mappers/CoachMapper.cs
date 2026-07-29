@@ -9,6 +9,7 @@ public static class CoachMapper
     {
         return new Coach()
         {
+            Id = coach.Id,
             Name = coach.Name,
             DateOfBirth = coach.DateOfBirth,
             Egn = coach.Egn,
@@ -21,11 +22,21 @@ public static class CoachMapper
     {
         return new CoachDTO()
         {
+            Id = coach.Id,
             Name = coach.Name,
             DateOfBirth = coach.DateOfBirth,
             Egn = coach.Egn,
             BirthPlace = coach.BirthPlace,
             Address = coach.Address
+        };
+    }
+
+    public static AttachCoachDTO ToAttachDTO(Coach coach)
+    {
+        return new AttachCoachDTO()
+        {
+            Id = coach.Id,
+            Name = coach.Name
         };
     }
 }

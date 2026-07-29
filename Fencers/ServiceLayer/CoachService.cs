@@ -23,6 +23,12 @@ public class CoachService(CoachRepository repository)
         return coaches.Select(c => CoachMapper.ToUI(c)).ToList();
     }
 
+    public async Task<List<AttachCoachDTO>> GetAllAttachCoachesAsync()
+    {
+        var allCoaches = await repository.GetAllAsync();
+        return allCoaches.Select(c => CoachMapper.ToAttachDTO(c)).ToList();
+    }
+
     // UPDATE
     public Task<bool> UpdateCoachAsync(int id, string name, DateOnly dateOfBirth,  string egn, string birthPlace, string address) =>
         repository.UpdateAsync(id, name, dateOfBirth, egn, birthPlace, address);
