@@ -11,9 +11,9 @@ public class CoachService(CoachRepository repository)
     // CREATE
     public async Task<CoachDTO> CreateCoachAsync(CoachDTO coach)
     {
-        var toDB = CoachMapper.ToBusiness(coach);
-        var toUI = await repository.CreateAsync(toDB);
-        return CoachMapper.ToUI(toUI);
+        var coachEntity = CoachMapper.ToBusiness(coach);
+        var createdCoach = await repository.CreateAsync(coachEntity);
+        return CoachMapper.ToUI(createdCoach);
     }
 
     // READ

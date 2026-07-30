@@ -10,9 +10,9 @@ public class FencerService(FencerRepository repository)
     // CREATE
     public async Task<FencerDTO> CreateFencerAsync(FencerDTO fencer)
     {
-        var toDB = FencerMapper.ToBusiness(fencer);
-        var toUI = await repository.CreateAsync(toDB);
-        return FencerMapper.ToUI(toUI);    
+        var fencerEntity = FencerMapper.ToBusiness(fencer);
+        var createdFencer = await repository.CreateAsync(fencerEntity);
+        return FencerMapper.ToUI(createdFencer);    
     }
     
     // READ

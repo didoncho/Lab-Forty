@@ -3,8 +3,8 @@
 @using ServiceLayer
 @using ServiceLayer.DTOs
 @using ServiceLayer.Mappers
-@inject FencerService fencer
-@inject CoachService coach
+@inject FencerService fencerService
+@inject CoachService coachService
 @rendermode InteractiveServer
 
 <h3>Fencers</h3>
@@ -109,29 +109,29 @@
 
     private async Task AddFencer()
     {
-        await fencer.CreateFencerAsync(newFencer);
+        await fencerService.CreateFencerAsync(newFencer);
         newFencer = new();
-        fencers = await fencer.GetAllFencersAsync();
+        fencers = await fencerService.GetAllFencersAsync();
     }
     
     protected override async Task OnInitializedAsync()
     {
         if (fencers.Count == 0)
         {
-            fencers = await fencer.GetAllFencersAsync();
+            fencers = await fencerService.GetAllFencersAsync();
         }
 
         if (coaches.Count == 0)
         {
-            coaches = await coach.GetAllAttachCoachesAsync();
+            coaches = await coachService.GetAllAttachCoachesAsync();
         }
         //return base.OnInitializedAsync();
     }
 
     private async Task OnDelete(int id)
     {
-        await fencer.DeleteFencerAsync(id);
-        fencers = await fencer.GetAllFencersAsync();
+        await fencerService.DeleteFencerAsync(id);
+        fencers = await fencerService.GetAllFencersAsync();
     }
 
     List<FencerDTO> fencers = [];
