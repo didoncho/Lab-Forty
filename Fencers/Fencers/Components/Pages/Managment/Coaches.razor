@@ -1,10 +1,12 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Runtime.CompilerServices
+@using System.Text.Json
 @using ServiceLayer
 @using ServiceLayer.DTOs
+@using ServiceLayer.Helpers
 @using ServiceLayer.Mappers
 @page "/Coaches"
-@inject CoachService coach
+@inject CoachService coachService
 @rendermode InteractiveServer
 
 <h3>Coaches</h3>
@@ -29,7 +31,7 @@
             <td>@c.BirthPlace</td>
             <td>@c.Address</td>
             <td><button @onclick="async (_) => await OnDelete(c.Id)">Delete</button></td>
-            <td><button @onclick="async (_) => await OnUpdate(c)">Update</button></td>
+            <td><button @onclick="async (_) => await UpdateCoach(c)">Update</button></td>
         </tr>
     }
 </table>
@@ -39,7 +41,7 @@
 @if (ShowAdd)
 {
 
-    <h3>Add a new coach</h3>
+    <h3>@(isEditing ? "Edit coach information" : "Add coach")</h3>
 
     <EditForm Model="newCoach" OnValidSubmit="AddCoach" class="form-control">
         <DataAnnotationsValidator/>
@@ -74,12 +76,13 @@
             <ValidationMessage For="() => newCoach.Address"/>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Coach</button>
+        <button type="submit" class="btn btn-primary">@(isEditing ? "Edit information" : "Add coach")</button>
     </EditForm>
 }
 
 @code {
     public bool ShowAdd = false;
+    public bool isEditing => newCoach.Id != 0;
     
     CoachDTO newCoach = new();
 
@@ -90,29 +93,33 @@
 
     private async Task AddCoach()
     {
-        await coach.CreateCoachAsync(newCoach);
+        if(isEditing)
+            await coachService.UpdateCoachAsync(newCoach.Id, newCoach.Name, newCoach.DateOfBirth,  newCoach.Egn, newCoach.BirthPlace, newCoach.Address);
+        else
+            await coachService.CreateCoachAsync(newCoach);
+        
         newCoach = new();
-        coaches = await coach.GetAllCoachesAsync();
+        coaches = await coachService.GetAllCoachesAsync();
     }
     
     protected override async Task OnInitializedAsync()
     {
         if (coaches.Count == 0)
         {
-            coaches = await coach.GetAllCoachesAsync();
+            coaches = await coachService.GetAllCoachesAsync();
         }
         //return base.OnInitializedAsync();
     }
     
     private async Task OnDelete(int id)
     {
-        await coach.DeleteCoachAsync(id);
-        coaches = await coach.GetAllCoachesAsync();
+        await coachService.DeleteCoachAsync(id);
+        coaches = await coachService.GetAllCoachesAsync();
     }
 
-    private async Task OnUpdate(CoachDTO coach)
+    private async Task UpdateCoach(CoachDTO coach)
     {
-        newCoach = coach;
+        newCoach = JSONHelper.DeepCopy(coach);
         ShowAdd = true;
     }
 

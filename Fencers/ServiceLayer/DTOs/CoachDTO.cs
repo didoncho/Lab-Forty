@@ -14,6 +14,7 @@ public class CoachDTO
     [Required(ErrorMessage = "Date of birth is required.")]
     public DateOnly DateOfBirth { get; set; }
 
+    [MaxLength(10)]
     public string Egn { get; set; } = string.Empty;
     public string BirthPlace { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;

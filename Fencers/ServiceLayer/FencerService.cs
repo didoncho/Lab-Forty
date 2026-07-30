@@ -1,5 +1,6 @@
 using DatabaseLayer;
 using BusinessLayer;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ServiceLayer.DTOs;
 using ServiceLayer.Mappers;
 
@@ -23,8 +24,8 @@ public class FencerService(FencerRepository repository)
     }
     
     // UPDATE
-    public Task<bool> UpdateFencerAsync(int id, string name, int UID) =>
-        repository.UpdateAsync(id, name, UID);
+    public Task<bool> UpdateFencerAsync(int id, string name, int uid, DateOnly dateOfBirth, string egn, string birthPlace, string address) =>
+        repository.UpdateAsync(id, name, uid, dateOfBirth, egn, birthPlace, address);
     
     // DELETE
     public Task<bool> DeleteFencerAsync(int id) => repository.DeleteAsync(id);
