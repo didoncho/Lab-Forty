@@ -1,46 +1,36 @@
 ﻿@using ServiceLayer
+@using System.IO
+@using Microsoft.AspNetCore.Mvc
 @page "/"
-@inject CompetitionService competitionService
+@inject IJSRuntime JS
 
 <PageTitle>Home</PageTitle>
-
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <td>Full Name</td>
-        <td>Phone Number</td>
-        <td>Equipment Count</td>
-    </tr>
-    </thead>
-    
-    @foreach (var f in fencers)
-    {
-        <tr>
-            <td>@f.Name</td>
-            <td>@f.PhoneNumber</td>
-            <td>@f.EquipmentCount</td>
-        </tr>
-    }
-</table>
+@* *@
+@* <table class="table table-striped"> *@
+@*     <thead> *@
+@*     <tr> *@
+@*         <td>Full Name</td> *@
+@*         <td>Phone Number</td> *@
+@*         <td>Equipment Count</td>     
+ </tr> 
+     </thead> 
+      
+     @foreach (var f in fencers) 
+     { 
+         <tr> 
+             <td>@f.Name</td> 
+             <td>@f.PhoneNumber</td> 
+             <td>@f.EquipmentCount</td> 
+         </tr> 
+     } 
+ </table> *@
 
 @code
 {
-    public class Fencer
-    {
-        public string Name { get; set; }
-        public string PhoneNumber { get; set; }
-        public int EquipmentCount { get; set; }
-    }
-
-    List<Fencer> fencers = [
-    new Fencer() {Name= "Diyan Nikolov", PhoneNumber="02323232323", EquipmentCount=10},
-    new Fencer() {Name= "Ivan Ivanov",  PhoneNumber="023232323212343", EquipmentCount=6},
-    new Fencer() {Name= "Ivan Pavlov",  PhoneNumber="022323212343", EquipmentCount=3}
-    ];
-
-    protected override async Task OnInitializedAsync()
+    /*protected override async Task OnInitializedAsync()
     {
         //return base.OnInitializedAsync();
         await competitionService.GetAllCompetitionsAsync();
-    }
+    }*/
+    
 }

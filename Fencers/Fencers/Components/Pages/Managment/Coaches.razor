@@ -1,6 +1,8 @@
 @using System.ComponentModel.DataAnnotations
+@using System.Globalization
 @using System.Runtime.CompilerServices
 @using System.Text.Json
+@using CsvHelper
 @using ServiceLayer
 @using ServiceLayer.DTOs
 @using ServiceLayer.Helpers
@@ -8,6 +10,7 @@
 @page "/Coaches"
 @inject CoachService coachService
 @rendermode InteractiveServer
+@inject IJSRuntime JS
 
 <h3>Coaches</h3>
 
@@ -37,6 +40,7 @@
 </table>
 
 <button @onclick="ShowModal">@(ShowAdd ? "Close" : "Open")</button>
+<button @onclick="async () => await DownloadFileFromStream()">Download</button>
 
 @if (ShowAdd)
 {
@@ -79,6 +83,20 @@
         <button type="submit" class="btn btn-primary">@(isEditing ? "Edit information" : "Add coach")</button>
     </EditForm>
 }
+<script>
+  window.downloadFileFromStream = async (fileName, contentStreamReference) => {
+      const arrayBuffer = await contentStreamReference.arrayBuffer();
+      const blob = new Blob([arrayBuffer]);
+      const url = URL.createObjectURL(blob);
+      const anchorElement = document.createElement('a');
+      anchorElement.href = url;
+      anchorElement.download = fileName ?? '';
+      anchorElement.click();
+      anchorElement.remove();
+      URL.revokeObjectURL(url);
+  }  
+</script>
+
 
 @code {
     public bool ShowAdd = false;
@@ -121,6 +139,33 @@
     {
         newCoach = JSONHelper.DeepCopy(coach);
         ShowAdd = true;
+    }
+    
+    private Stream GetFileStream(string text)
+    {
+        var randomBinaryData = new byte[50 * 1024];
+        var fileStream = new MemoryStream(randomBinaryData);
+
+        return fileStream;
+    }
+
+    private async Task DownloadFileFromStream()
+    {
+        using (var writer = new StreamWriter("coaches.csv"))
+        {
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(coaches);
+            }
+        }
+        
+        byte[] data = File.ReadAllBytes("coaches.csv");
+        MemoryStream stream = new MemoryStream(data);
+        
+        
+        using var streamRef = new DotNetStreamReference(stream: stream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", "coaches.csv", streamRef);
     }
 
     List<CoachDTO> coaches = [];
