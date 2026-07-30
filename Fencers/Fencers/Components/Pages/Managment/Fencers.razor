@@ -1,7 +1,9 @@
 @page "/Fencers"
 @using System.ComponentModel.DataAnnotations
+@using System.Text.Json
 @using ServiceLayer
 @using ServiceLayer.DTOs
+@using ServiceLayer.Helpers
 @using ServiceLayer.Mappers
 @inject FencerService fencerService
 @inject CoachService coachService
@@ -33,6 +35,7 @@
             <td>@f.Address</td>
             <td>@coaches.FirstOrDefault(c => c.Id == f.CoachId)?.Name</td>
             <td><button @onclick="async (_) => await OnDelete(f.Id)">Delete</button></td>
+            <td><button @onclick="async (_) => await UpdateFencer(f)">Update</button></td>
         </tr>
     }
 </table>
@@ -42,7 +45,7 @@
 @if (ShowAdd)
 {
 
-    <h3>Add a new fencer</h3>
+    <h3>@(isEditing ? "Edit fencer information" : "Add fencer")</h3>
 
     <EditForm Model="newFencer" OnValidSubmit="AddFencer" class="form-control">
         <DataAnnotationsValidator/>
@@ -93,12 +96,13 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Fencer</button>
+        <button type="submit" class="btn btn-primary">@(isEditing ? "Edit information" : "Add fencer")</button>
     </EditForm>
 }
 
 @code {
     public bool ShowAdd = false;
+    public bool isEditing => newFencer.Id != 0;
     
     FencerDTO newFencer = new();
 
@@ -109,7 +113,10 @@
 
     private async Task AddFencer()
     {
-        await fencerService.CreateFencerAsync(newFencer);
+        if(isEditing)
+            await fencerService.UpdateFencerAsync(newFencer.Id, newFencer.Name, newFencer.UID, newFencer.DateOfBirth,  newFencer.Egn, newFencer.BirthPlace, newFencer.Address);
+        else
+            await fencerService.CreateFencerAsync(newFencer);
         newFencer = new();
         fencers = await fencerService.GetAllFencersAsync();
     }
@@ -132,6 +139,12 @@
     {
         await fencerService.DeleteFencerAsync(id);
         fencers = await fencerService.GetAllFencersAsync();
+    }
+
+    private async Task UpdateFencer(FencerDTO fencer)
+    {
+        newFencer = JSONHelper.DeepCopy(fencer);
+        ShowAdd = true;
     }
 
     List<FencerDTO> fencers = [];

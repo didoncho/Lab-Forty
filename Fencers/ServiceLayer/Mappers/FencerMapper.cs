@@ -36,4 +36,5 @@ public class FencerMapper
             CoachId = fencer.CoachId
         };
     }
+    
 }
