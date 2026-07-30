@@ -18,5 +18,5 @@ public class Coach
     [MaxLength(100)]
     public string Address { get; set; }
     
-    public List<Fencer>  Fencers { get; set; }
+    public List<Fencer> Fencers { get; set; }
 }

@@ -12,12 +12,16 @@ builder.Services.AddRazorComponents()
 builder.Services.AddDbContext<DataContext>();
 
 // REPOSITORIES
+#region DB
+
 builder.Services.AddScoped<CoachRepository>();
 builder.Services.AddScoped<CompetitionFileRepository>();
 builder.Services.AddScoped<CompetitionRepository>();
 builder.Services.AddScoped<CompetitionResultRepository>();
 builder.Services.AddScoped<FencerInformationRepository>();
 builder.Services.AddScoped<FencerRepository>();
+	
+#endregion
 
 // SERVICES
 builder.Services.AddScoped<CoachService>();

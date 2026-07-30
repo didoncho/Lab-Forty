@@ -1,0 +1,120 @@
+@using System.ComponentModel.DataAnnotations
+@using System.Runtime.CompilerServices
+@using ServiceLayer
+@using ServiceLayer.DTOs
+@using ServiceLayer.Mappers
+@page "/Coaches"
+@inject CoachService coach
+@rendermode InteractiveServer
+
+<h3>Coaches</h3>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Date of birth</td>
+        <td>EGN</td>
+        <td>Birth place</td>
+        <td>Address</td>
+    </tr>
+    </thead>
+    
+    @foreach (var c in coaches)
+    {
+        <tr>
+            <td>@c.Name</td>
+            <td>@c.DateOfBirth</td>
+            <td>@c.Egn</td>
+            <td>@c.BirthPlace</td>
+            <td>@c.Address</td>
+            <td><button @onclick="async (_) => await OnDelete(c.Id)">Delete</button></td>
+            <td><button @onclick="async (_) => await OnUpdate(c)">Update</button></td>
+        </tr>
+    }
+</table>
+
+<button @onclick="ShowModal">@(ShowAdd ? "Close" : "Open")</button>
+
+@if (ShowAdd)
+{
+
+    <h3>Add a new coach</h3>
+
+    <EditForm Model="newCoach" OnValidSubmit="AddCoach" class="form-control">
+        <DataAnnotationsValidator/>
+
+        <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <InputText id="name" class="form-control" @bind-Value="newCoach.Name"/>
+            <ValidationMessage For="() => newCoach.Name"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="dateOfBirth">Date of birth</label>
+            <InputDate id="dateOfBirth" class="form-control" @bind-Value="newCoach.DateOfBirth"/>
+            <ValidationMessage For="() => newCoach.DateOfBirth"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="egn">EGN</label>
+            <InputText id="egn" class="form-control" @bind-Value="newCoach.Egn"/>
+            <ValidationMessage For="() => newCoach.Egn"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="BirthPlace">Birth place</label>
+            <InputText id="BirthPlace" class="form-control" @bind-Value="newCoach.BirthPlace"/>
+            <ValidationMessage For="() => newCoach.BirthPlace"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="Address">Address</label>
+            <InputText id="Address" class="form-control" @bind-Value="newCoach.Address"/>
+            <ValidationMessage For="() => newCoach.Address"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Coach</button>
+    </EditForm>
+}
+
+@code {
+    public bool ShowAdd = false;
+    
+    CoachDTO newCoach = new();
+
+    private void ShowModal()
+    {
+        ShowAdd = !ShowAdd;
+    }
+
+    private async Task AddCoach()
+    {
+        await coach.CreateCoachAsync(newCoach);
+        newCoach = new();
+        coaches = await coach.GetAllCoachesAsync();
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        if (coaches.Count == 0)
+        {
+            coaches = await coach.GetAllCoachesAsync();
+        }
+        //return base.OnInitializedAsync();
+    }
+    
+    private async Task OnDelete(int id)
+    {
+        await coach.DeleteCoachAsync(id);
+        coaches = await coach.GetAllCoachesAsync();
+    }
+
+    private async Task OnUpdate(CoachDTO coach)
+    {
+        newCoach = coach;
+        ShowAdd = true;
+    }
+
+    List<CoachDTO> coaches = [];
+}
