@@ -107,6 +107,11 @@
     private void ShowModal()
     {
         ShowAdd = !ShowAdd;
+
+        if (!ShowAdd)
+        {
+            newCoach = new CoachDTO();
+        }
     }
 
     private async Task AddCoach()

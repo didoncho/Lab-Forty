@@ -1,6 +1,8 @@
 @page "/Fencers"
 @using System.ComponentModel.DataAnnotations
+@using System.Globalization
 @using System.Text.Json
+@using CsvHelper
 @using ServiceLayer
 @using ServiceLayer.DTOs
 @using ServiceLayer.Helpers
@@ -8,6 +10,7 @@
 @inject FencerService fencerService
 @inject CoachService coachService
 @rendermode InteractiveServer
+@inject IJSRuntime JS
 
 <h3>Fencers</h3>
 
@@ -41,6 +44,7 @@
 </table>
 
 <button @onclick="ShowModal">@(ShowAdd ? "Close" : "Open")</button>
+<button @onclick="async () => await DownloadFileFromStream()">Download</button>
 
 @if (ShowAdd)
 {
@@ -100,6 +104,20 @@
     </EditForm>
 }
 
+<script>
+  window.downloadFileFromStream = async (fileName, contentStreamReference) => {
+      const arrayBuffer = await contentStreamReference.arrayBuffer();
+      const blob = new Blob([arrayBuffer]);
+      const url = URL.createObjectURL(blob);
+      const anchorElement = document.createElement('a');
+      anchorElement.href = url;
+      anchorElement.download = fileName ?? '';
+      anchorElement.click();
+      anchorElement.remove();
+      URL.revokeObjectURL(url);
+  }  
+</script>
+
 @code {
     public bool ShowAdd = false;
     public bool isEditing => newFencer.Id != 0;
@@ -109,6 +127,11 @@
     private void ShowModal()
     {
         ShowAdd = !ShowAdd;
+        
+        if (!ShowAdd)
+        {
+            newFencer = new FencerDTO();
+        }
     }
 
     private async Task AddFencer()
@@ -145,6 +168,45 @@
     {
         newFencer = JSONHelper.DeepCopy(fencer);
         ShowAdd = true;
+    }
+    
+    private Stream GetFileStream(string text)
+    {
+        var randomBinaryData = new byte[50 * 1024];
+        var fileStream = new MemoryStream(randomBinaryData);
+
+        return fileStream;
+    }
+
+    private async Task DownloadFileFromStream()
+    {
+        var fencerExportData = fencers.Select(f => new
+        {
+            f.Id,
+            f.Name,
+            f.UID,
+            f.DateOfBirth,
+            f.Egn,
+            f.BirthPlace,
+            f.Address,
+            Coach = coaches.FirstOrDefault(c => c.Id == f.CoachId)?.Name
+        });
+        
+        using (var writer = new StreamWriter("fencers.csv"))
+        {
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(fencerExportData);
+            }
+        }
+        
+        byte[] data = File.ReadAllBytes("fencers.csv");
+        MemoryStream stream = new MemoryStream(data);
+        
+        
+        using var streamRef = new DotNetStreamReference(stream: stream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", "fencers.csv", streamRef);
     }
 
     List<FencerDTO> fencers = [];
