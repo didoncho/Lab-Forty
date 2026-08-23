@@ -22,6 +22,16 @@ public class CompetitionResultRepository(DataContext context)
             .Include(u => u.Fencer)
             .ToListAsync();
     }
+
+    public async Task<List<CompetitionResult>> GetResultsByCompetitionIdAsync(int competitionId)
+    {
+        return await context.CompetitionResults
+            .AsNoTracking()
+            .Where(x => x.Id == competitionId)
+            .Include(x => x.Competition)
+            .Include(x => x.Fencer)
+            .ToListAsync();
+    }
     
     // UPDATE
     public async Task<bool> UpdateAsync(int id, int rank, int points)

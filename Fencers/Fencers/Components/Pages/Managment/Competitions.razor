@@ -1,0 +1,183 @@
+@page "/Competitions"
+@using ServiceLayer
+@using ServiceLayer.DTOs
+@using ServiceLayer.Helpers
+@using ServiceLayer.Mappers
+@inject CompetitionService competitionService
+@inject CompetitionResultService resultService
+@rendermode InteractiveServer
+@inject IJSRuntime JS
+
+<h3>Competitions</h3>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Date</td> 
+        <td>Results</td>
+    </tr>
+    </thead>
+    
+    @foreach (var c in competitions)
+    {
+        <tr>
+            <td>@c.Name</td>
+            <td>@c.Date</td>
+            <td><button @onclick="async (_) => await OnViewResults(c.Id)">View</button></td>
+            <td><button @onclick="async (_) => await OnDelete(c.Id)">Delete</button></td>
+            <td><button @onclick="async (_) => await UpdateFencer(c)">Update</button></td>
+        </tr>
+    }
+</table>
+
+<button @onclick="ShowModal">@(ShowAdd ? "Close" : "Open")</button>
+
+@if (ShowAdd)
+{
+
+    <h3>@(isEditing ? "Edit competition information" : "Add competition")</h3>
+
+    <EditForm Model="newCompetition" OnValidSubmit="AddCompetition" class="form-control">
+        <DataAnnotationsValidator/>
+
+        <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <InputText id="name" class="form-control" @bind-Value="newCompetition.Name"/>
+            <ValidationMessage For="() => newCompetition.Name"/>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label" for="name">Date</label>
+            <InputDate id="date" class="form-control" @bind-Value="newCompetition.Date"/>
+            <ValidationMessage For="() => newCompetition.Date"/>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">@(isEditing ? "Edit information" : "Add competition")</button>
+    </EditForm>
+}
+
+@if (showResultsModal)
+{
+    <!-- Backdrop layer -->
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Competition Results</h5>
+                    <button type="button" class="btn-close" @onclick="CloseResultsModal"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    @if (selectedResults != null && selectedResults.Any())
+                    {
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Points</th>
+                                    <!-- Add other properties present in your CompetitionResultDTO -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var result in selectedResults)
+                                {
+                                    <tr>
+                                        <td>@result.Rank</td>
+                                        <td>@result.Points</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info mb-0">
+                            No results found for this competition.
+                        </div>
+                    }
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseResultsModal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    public bool ShowAdd = false;
+    public bool isEditing => newCompetition.Id != 0;
+    
+    private bool showResultsModal = false;
+    private int selectedCompetitionId;
+    private List<CompetitionResultDTO> selectedResults = new();
+    
+    CompetitionDTO newCompetition = new();
+
+    private void ShowModal()
+    {
+        ShowAdd = !ShowAdd;
+        
+        if (!ShowAdd)
+        {
+            newCompetition = new CompetitionDTO();
+        }
+    }
+
+    private async Task AddCompetition()
+    {
+        if(isEditing)
+            await competitionService.UpdateCompetitionAsync(newCompetition.Id, newCompetition.Name, newCompetition.Date);
+        else
+            await competitionService.CreateCompetitionAsync(CompetitionMapper.ToBusiness(newCompetition));
+        newCompetition = new();
+        var domainList = await competitionService.GetAllCompetitionsAsync();
+        competitions = domainList.Select(CompetitionMapper.ToUI).ToList();
+        
+        //could this be made on a method in the CompetitionMapper.cs????
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        if (competitions.Count == 0)
+        {
+            var domainList = await competitionService.GetAllCompetitionsAsync();
+            competitions = domainList.Select(CompetitionMapper.ToUI).ToList();
+        }
+        //return base.OnInitializedAsync();
+    }
+    
+    private async Task OnDelete(int id)
+    {
+        await competitionService.DeleteCompetitionAsync(id);
+        var domainList = await competitionService.GetAllCompetitionsAsync();
+        competitions = domainList.Select(CompetitionMapper.ToUI).ToList();
+    }
+    
+    private async Task UpdateFencer(CompetitionDTO competition)
+    {
+        newCompetition = JSONHelper.DeepCopy(competition);
+        ShowAdd = true;
+    }
+
+    private async Task OnViewResults(int competitionId)
+    {
+        selectedCompetitionId = competitionId;
+        selectedResults = await resultService.GetResultsByCompetitionIdAsync(competitionId);
+        showResultsModal = true;
+    }
+    
+    private void CloseResultsModal()
+    {
+        showResultsModal = false;
+    }
+    
+    List<CompetitionDTO> competitions = new();
+}
