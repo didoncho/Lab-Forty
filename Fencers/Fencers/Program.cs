@@ -30,6 +30,7 @@ builder.Services.AddScoped<CompetitionResultService>();
 builder.Services.AddScoped<CompetitionService>();
 builder.Services.AddScoped<FencerInformationService>();
 builder.Services.AddScoped<FencerService>();
+builder.Services.AddScoped<CsvImportService>();
 
 var app = builder.Build();
 

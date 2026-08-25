@@ -8,7 +8,11 @@ namespace ServiceLayer;
 public class CompetitionResultService(CompetitionResultRepository repository)
 {
     // CREATE
-    public Task<CompetitionResult> CreateCompetitionResultAsync(CompetitionResult competitionResult) => repository.CreateAsync(competitionResult);
+    public async Task<CompetitionResultDTO> CreateCompetitionResultAsync(CompetitionResultDTO competitionResult)
+    {
+        var entity = CompetitionResultMapper.ToBusiness(competitionResult);
+        return CompetitionResultMapper.ToUI((await repository.CreateAsync(entity)));
+    }
     
     // READ
     public Task<List<CompetitionResult>> GetAllCompetitionResultsAsync() => repository.GetAllAsync();

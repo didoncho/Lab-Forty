@@ -57,4 +57,10 @@ public class CompetitionResultRepository(DataContext context)
         await context.SaveChangesAsync();
         return true;
     }
+    
+    public async Task AddRangeAsync(IEnumerable<CompetitionResult> results)
+    {
+        await context.CompetitionResults.AddRangeAsync(results);
+        await context.SaveChangesAsync();
+    }
 }

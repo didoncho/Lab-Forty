@@ -1,4 +1,8 @@
 @page "/Competitions"
+@using System.Globalization
+@using CsvHelper
+@using CsvHelper.TypeConversion
+@using DatabaseLayer
 @using ServiceLayer
 @using ServiceLayer.DTOs
 @using ServiceLayer.Helpers
@@ -7,6 +11,7 @@
 @inject CompetitionResultService resultService
 @rendermode InteractiveServer
 @inject IJSRuntime JS
+@inject CsvImportService Importer
 
 <h3>Competitions</h3>
 
@@ -32,6 +37,8 @@
 </table>
 
 <button @onclick="ShowModal">@(ShowAdd ? "Close" : "Open")</button>
+<button @onclick="async () => await DownloadFileFromStream()">Download template</button>
+<InputFile id="csv" OnChange="OnFileSelectedAsync" accept=".csv,text/csv" class="form-control" />
 
 @if (ShowAdd)
 {
@@ -110,6 +117,44 @@
     </div>
 }
 
+<script>
+  window.downloadFileFromStream = async (fileName, contentStreamReference) => {
+      const arrayBuffer = await contentStreamReference.arrayBuffer();
+      const blob = new Blob([arrayBuffer]);
+      const url = URL.createObjectURL(blob);
+      const anchorElement = document.createElement('a');
+      anchorElement.href = url;
+      anchorElement.download = fileName ?? '';
+      anchorElement.click();
+      anchorElement.remove();
+      URL.revokeObjectURL(url);
+  }  
+</script>
+
+@if (competitionResults.Count > 0)
+{
+    <p>Parsed <strong>@competitionResults.Count</strong> rows from @fileName.</p>
+
+    <table class="table table-sm table-striped">
+        <thead>
+        <tr>
+            <th>Id</th><th>Rank</th><th>Points</th>
+            <th>Fencer UID</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var competitionResult in competitionResults)
+        {
+            <tr @key="competitionResult.Id">
+                <td>@competitionResult.Rank</td>
+                <td>@competitionResult.Points</td>
+                <td>@competitionResult.FencerUID</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
 @code {
     public bool ShowAdd = false;
     public bool isEditing => newCompetition.Id != 0;
@@ -180,4 +225,72 @@
         competitions = await competitionService.GetAllCompetitionsAsync();
     }
 
+    private async Task DownloadFileFromStream()
+    {
+        var competitionExport = new List<CompetitionResultDTO>();
+        
+        using (var writer = new StreamWriter("competition.csv"))
+        {
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(competitionExport);
+            }
+        }
+        
+        byte[] data = File.ReadAllBytes("competition.csv");
+        MemoryStream stream = new MemoryStream(data);
+        
+        
+        using var streamRef = new DotNetStreamReference(stream: stream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", "competition.csv", streamRef);
+    }
+    
+    private string? fileName;
+    private string? errorMessage;
+    private bool isBusy;
+    private const long MaxFileSize = 10L * 1024 * 1024; // 10 MB
+    private List<CompetitionResultDTO> competitionResults = new();
+
+    private async Task OnFileSelectedAsync(InputFileChangeEventArgs e)
+    {
+        isBusy = true;
+        errorMessage = null;
+        fileName = e.File.Name;
+
+        try
+        {
+            // Buffer the browser stream: CsvHelper needs synchronous, seekable reads.
+            await using var buffer = new MemoryStream();
+            await using (var source = e.File.OpenReadStream(MaxFileSize))
+            {
+                await source.CopyToAsync(buffer);
+            }
+            buffer.Position = 0;
+
+            competitionResults = (await Importer.ReadAsync<CompetitionResultDTO>(buffer)).ToList();
+            foreach (var x in competitionResults)
+            {
+                await resultService.CreateCompetitionResultAsync(x);
+            }
+        }
+        catch (IOException ex)
+        {
+            errorMessage = $"That file is larger than the {MaxFileSize / 1024 / 1024} MB limit. ({ex.Message})";
+        }
+        catch (HeaderValidationException)
+        {
+            errorMessage = "The file is missing one or more expected columns. "
+                           + "Expected: Id, First Name, Last Name, Email, Hire Date, Salary.";
+        }
+        catch (TypeConverterException ex)
+        {
+            errorMessage = $"Row {ex.Context?.Parser?.Row}: '{ex.Text}' is not a valid "
+                           + $"{ex.MemberMapData.Member?.Name}.";
+        }
+        finally
+        {
+            isBusy = false;
+        }
+    }
 }
