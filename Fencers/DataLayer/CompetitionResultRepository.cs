@@ -27,7 +27,7 @@ public class CompetitionResultRepository(DataContext context)
     {
         return await context.CompetitionResults
             .AsNoTracking()
-            .Where(x => x.Id == competitionId)
+            .Where(x => x.CompetitionID == competitionId)
             .Include(x => x.Competition)
             .Include(x => x.Fencer)
             .ToListAsync();

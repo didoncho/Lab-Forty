@@ -78,8 +78,7 @@
                             <thead>
                                 <tr>
                                     <th>Rank</th>
-                                    <th>Points</th>
-                                    <!-- Add other properties present in your CompetitionResultDTO -->
+                                    <th>Points</th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,17 +113,18 @@
 @code {
     public bool ShowAdd = false;
     public bool isEditing => newCompetition.Id != 0;
-    
+    List<CompetitionDTO> competitions = new();
+
     private bool showResultsModal = false;
     private int selectedCompetitionId;
     private List<CompetitionResultDTO> selectedResults = new();
-    
+
     CompetitionDTO newCompetition = new();
 
     private void ShowModal()
     {
         ShowAdd = !ShowAdd;
-        
+
         if (!ShowAdd)
         {
             newCompetition = new CompetitionDTO();
@@ -133,34 +133,30 @@
 
     private async Task AddCompetition()
     {
-        if(isEditing)
+        if (isEditing)
             await competitionService.UpdateCompetitionAsync(newCompetition.Id, newCompetition.Name, newCompetition.Date);
         else
             await competitionService.CreateCompetitionAsync(CompetitionMapper.ToBusiness(newCompetition));
+
         newCompetition = new();
-        var domainList = await competitionService.GetAllCompetitionsAsync();
-        competitions = domainList.Select(CompetitionMapper.ToUI).ToList();
-        
-        //could this be made on a method in the CompetitionMapper.cs????
+        await LoadCompetitions();
     }
-    
+
     protected override async Task OnInitializedAsync()
     {
         if (competitions.Count == 0)
         {
-            var domainList = await competitionService.GetAllCompetitionsAsync();
-            competitions = domainList.Select(CompetitionMapper.ToUI).ToList();
+            await LoadCompetitions();
         }
         //return base.OnInitializedAsync();
     }
-    
+
     private async Task OnDelete(int id)
     {
         await competitionService.DeleteCompetitionAsync(id);
-        var domainList = await competitionService.GetAllCompetitionsAsync();
-        competitions = domainList.Select(CompetitionMapper.ToUI).ToList();
+        await LoadCompetitions();
     }
-    
+
     private async Task UpdateFencer(CompetitionDTO competition)
     {
         newCompetition = JSONHelper.DeepCopy(competition);
@@ -173,11 +169,15 @@
         selectedResults = await resultService.GetResultsByCompetitionIdAsync(competitionId);
         showResultsModal = true;
     }
-    
+
     private void CloseResultsModal()
     {
         showResultsModal = false;
     }
-    
-    List<CompetitionDTO> competitions = new();
+
+    private async Task LoadCompetitions()
+    {
+        competitions = await competitionService.GetAllCompetitionsAsync();
+    }
+
 }

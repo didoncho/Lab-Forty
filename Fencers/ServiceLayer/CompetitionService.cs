@@ -1,5 +1,7 @@
 using DatabaseLayer;
 using BusinessLayer;
+using ServiceLayer.Mappers;
+using ServiceLayer.DTOs;
 
 namespace ServiceLayer;
 
@@ -9,7 +11,12 @@ public class CompetitionService(CompetitionRepository repository)
     public Task<Competition> CreateCompetitionAsync(Competition competition) => repository.CreateAsync(competition);
     
     // READ
-    public Task<List<Competition>> GetAllCompetitionsAsync() => repository.GetAllAsync();
+    public async Task<List<CompetitionDTO>> GetAllCompetitionsAsync()
+    {
+        var results = await repository.GetAllAsync();
+        return results.Select(CompetitionMapper.ToUI).ToList();
+    }
+        
     
     // UPDATE
     public Task<bool> UpdateCompetitionAsync(int id, string name, DateOnly date) =>

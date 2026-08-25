@@ -11,4 +11,7 @@ public class CompetitionResultDTO
     
     [Required]
     public int Points { get; set; }
+    
+    [Required]
+    public int FencerUID { get; set; }
 }

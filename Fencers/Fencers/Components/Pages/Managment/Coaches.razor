@@ -156,7 +156,8 @@
 
     private async Task DownloadFileFromStream()
     {
-        using (var writer = new StreamWriter("coaches.csv"))
+        Directory.CreateDirectory("generatedFiles");
+        using (var writer = new StreamWriter("generatedFiles/coaches.csv"))
         {
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
@@ -164,7 +165,7 @@
             }
         }
         
-        byte[] data = File.ReadAllBytes("coaches.csv");
+        byte[] data = File.ReadAllBytes("generatedFiles/coaches.csv");
         MemoryStream stream = new MemoryStream(data);
         
         

@@ -169,14 +169,6 @@
         newFencer = JSONHelper.DeepCopy(fencer);
         ShowAdd = true;
     }
-    
-    private Stream GetFileStream(string text)
-    {
-        var randomBinaryData = new byte[50 * 1024];
-        var fileStream = new MemoryStream(randomBinaryData);
-
-        return fileStream;
-    }
 
     private async Task DownloadFileFromStream()
     {
