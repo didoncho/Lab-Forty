@@ -29,6 +29,7 @@ public class FencerMapper
         {
             Id = fencer.Id,
             Name = fencer.Name,
+            UID =  fencer.UID,
             DateOfBirth = fencer.FencerInformation?.DateOfBirth ?? default,
             Egn = fencer.FencerInformation?.Egn ?? string.Empty,
             BirthPlace = fencer.FencerInformation?.BirthPlace ?? string.Empty,
