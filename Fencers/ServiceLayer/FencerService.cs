@@ -22,6 +22,11 @@ public class FencerService(FencerRepository repository)
         var fencers = await repository.GetAllAsync();
         return fencers.Select(f => FencerMapper.ToUI(f)).ToList();
     }
+
+    public Task<Dictionary<int, int>> GetUniquePairs()
+    {
+        return repository.GetUniquePair();
+    }
     
     // UPDATE
     public Task<bool> UpdateFencerAsync(int id, string name, int uid, DateOnly dateOfBirth, string egn, string birthPlace, string address) =>

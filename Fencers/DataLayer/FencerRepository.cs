@@ -22,6 +22,13 @@ public class FencerRepository(DataContext context)
             .ToListAsync();
     }
     
+    public async Task<Dictionary<int, int>> GetUniquePair()
+    {
+        return await context.Fencers
+            .AsNoTracking()
+            .ToDictionaryAsync(x => x.UID, x => x.Id);
+    }
+    
     // UPDATE
     public async Task<bool> UpdateAsync(int id, string name, int uid, DateOnly dateOfBirth, string egn, string birthPlace, string address)
     {

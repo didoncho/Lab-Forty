@@ -32,13 +32,17 @@
             <td><button @onclick="async (_) => await OnViewResults(c.Id)">View</button></td>
             <td><button @onclick="async (_) => await OnDelete(c.Id)">Delete</button></td>
             <td><button @onclick="async (_) => await UpdateFencer(c)">Update</button></td>
+            <td>
+                
+<InputFile id="csv" OnChange="@(async (InputFileChangeEventArgs e) => await OnFileSelectedAsync(e, c.Id))" accept=".csv,text/csv" class="form-control" />
+                
+            </td>
         </tr>
     }
 </table>
 
 <button @onclick="ShowModal">@(ShowAdd ? "Close" : "Open")</button>
 <button @onclick="async () => await DownloadFileFromStream()">Download template</button>
-<InputFile id="csv" OnChange="OnFileSelectedAsync" accept=".csv,text/csv" class="form-control" />
 
 @if (ShowAdd)
 {
@@ -138,14 +142,14 @@
     <table class="table table-sm table-striped">
         <thead>
         <tr>
-            <th>Id</th><th>Rank</th><th>Points</th>
+            <th>Rank</th><th>Points</th>
             <th>Fencer UID</th>
         </tr>
         </thead>
         <tbody>
         @foreach (var competitionResult in competitionResults)
         {
-            <tr @key="competitionResult.Id">
+            <tr>
                 <td>@competitionResult.Rank</td>
                 <td>@competitionResult.Points</td>
                 <td>@competitionResult.FencerUID</td>
@@ -252,7 +256,7 @@
     private const long MaxFileSize = 10L * 1024 * 1024; // 10 MB
     private List<CompetitionResultDTO> competitionResults = new();
 
-    private async Task OnFileSelectedAsync(InputFileChangeEventArgs e)
+    private async Task OnFileSelectedAsync(InputFileChangeEventArgs e, int competitionId)
     {
         isBusy = true;
         errorMessage = null;
@@ -269,9 +273,13 @@
             buffer.Position = 0;
 
             competitionResults = (await Importer.ReadAsync<CompetitionResultDTO>(buffer)).ToList();
-            foreach (var x in competitionResults)
+            if (competitionResults.Any())
             {
-                await resultService.CreateCompetitionResultAsync(x);
+                foreach (var r in competitionResults)
+                {
+                    r.CompetitionId = competitionId;
+                }
+                await resultService.SaveCompetitionResultsAsync(competitionResults);
             }
         }
         catch (IOException ex)
