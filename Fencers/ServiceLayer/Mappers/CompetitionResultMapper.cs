@@ -11,7 +11,9 @@ public class CompetitionResultMapper
         {
             Id = competition.Id,
             Rank = competition.Rank,
-            Points = competition.Points
+            Points = competition.Points,
+            CompetitionID =  competition.CompetitionId,
+            FencerId =  competition.FencerId
         };
     }
     
@@ -21,7 +23,9 @@ public class CompetitionResultMapper
         {
             Id = competition.Id,
             Rank = competition.Rank,
-            Points = competition.Points
+            Points = competition.Points,
+            CompetitionId = competition.CompetitionID,
+            FencerId =  competition.FencerId
         };
     }
 }
